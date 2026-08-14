@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The December Dossier</title>
+<meta name="description" content="An interactive scorecard comparing three Christmas 2026 adventure trips for two, flying out of Denver.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink: #1B2A24;
+    --ink-soft: #4B5D55;
+    --paper: #EDE6D2;
+    --paper-raised: #E2D8BB;
+    --paper-raised-2: #D8CCA9;
+    --line: #C3B68F;
+    --brass: #8C5E22;
+    --brass-strong: #6E4A1B;
+    --ember: #8C3A26;
+    --cr-a: #3F6B4F; --cr-b: #B94E27;
+    --pt-a: #275A76; --pt-b: #A9791F;
+    --nz-a: #2A7488; --nz-b: #93762F;
+    --shadow: 0 1px 0 rgba(27,42,36,0.08);
+    --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Georgia, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink: #ECE3C8;
+      --ink-soft: #B9AE8C;
+      --paper: #11201A;
+      --paper-raised: #182A22;
+      --paper-raised-2: #20362B;
+      --line: #33473D;
+      --brass: #D8A857;
+      --brass-strong: #EEC177;
+      --ember: #E08765;
+      --cr-a: #75B08C; --cr-b: #E28356;
+      --pt-a: #79B4D3; --pt-b: #DDB35E;
+      --nz-a: #6CC6DB; --nz-b: #D6BD73;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink: #ECE3C8;
+    --ink-soft: #B9AE8C;
+    --paper: #11201A;
+    --paper-raised: #182A22;
+    --paper-raised-2: #20362B;
+    --line: #33473D;
+    --brass: #D8A857;
+    --brass-strong: #EEC177;
+    --ember: #E08765;
+    --cr-a: #75B08C; --cr-b: #E28356;
+    --pt-a: #79B4D3; --pt-b: #DDB35E;
+    --nz-a: #6CC6DB; --nz-b: #D6BD73;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ -webkit-text-size-adjust: 100%; }
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  ::selection{ background: var(--brass); color: var(--paper); }
+  a{ color: var(--brass-strong); }
+  h1,h2,h3{ font-family: var(--font-display); text-wrap: balance; margin: 0; color: var(--ink); }
+  .wrap{ max-width: 860px; margin: 0 auto; padding: 0 20px; }
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  button{ font-family: inherit; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+    outline: 2px solid var(--brass-strong);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    border-bottom: 1px solid var(--line);
+    padding: 28px 0 22px;
+  }
+  .masthead .top{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .masthead h1{
+    font-size: clamp(2rem, 6vw, 2.7rem);
+    line-height: 1.05;
+    margin-top: 6px;
+  }
+  .route-line{
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--brass-strong);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+  .masthead p.intro{
+    max-width: 60ch;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    font-size: 1.02rem;
+  }
+  /* ---------- Tabs ---------- */
+  .tabbar{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+  }
+  .tabbar .row{
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabbar .row::-webkit-scrollbar{ display: none; }
+  .tab{
+    flex: 0 0 auto;
+    border: 1px solid var(--line);
+    background: var(--paper-raised);
+    color: var(--ink-soft);
+    padding: 9px 16px;
+    font-size: 0.88rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 3px;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .tab .n{ opacity: .55; margin-right: 6px; }
+  .tab[aria-selected="true"]{
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .tab.cr[aria-selected="true"]{ background: var(--cr-a); border-color: var(--cr-a); color: #fff; }
+  .tab.pt[aria-selected="true"]{ background: var(--pt-a); border-color: var(--pt-a); color: #fff; }
+  .tab.nz[aria-selected="true"]{ background: var(--nz-a); border-color: var(--nz-a); color: #fff; }
+
+  /* ---------- Dossier ---------- */
+  .dossier{ display: none; padding: 30px 0 10px; }
+  .dossier.active{ display: block; }
+  .dossier-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--accent-a);
+    padding-bottom: 14px;
+    margin-bottom: 6px;
+  }
+  .dossier-head h2{ font-size: clamp(1.5rem, 4vw, 2.05rem); }
+  .dossier-head .tagline{ color: var(--ink-soft); font-size: 0.95rem; margin-top: 4px; max-width: 46ch; }
+  .verdict-badge{
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent-a);
+    color: #fff;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+
+  .stat-row{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .stat{
+    background: var(--paper);
+    padding: 14px 16px;
+  }
+  .stat .k{ font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .stat .v{ font-family: var(--font-mono); font-size: 1.15rem; margin-top: 4px; font-variant-numeric: tabular-nums; color: var(--accent-a); }
+
+  section.block{ margin: 32px 0; }
+  section.block h3{ font-size: 1.15rem; margin-bottom: 4px; }
+  section.block .sub{ color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 14px; }
+
+  table.grid-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  table.grid-table th, table.grid-table td{
+    border-bottom: 1px solid var(--line);
+    padding: 9px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.grid-table th{
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  table.grid-table td.num, table.grid-table th.num{ font-variant-numeric: tabular-nums; font-family: var(--font-mono); white-space: nowrap; }
+  .table-scroll{ overflow-x: auto; }
+  tr.total-row td{ font-weight: 600; border-top: 2px solid var(--accent-a); border-bottom: none; }
+  tr.total-row td.num{ color: var(--accent-a); }
+
+  .nye-callout{
+    background: var(--paper-raised);
+    border-left: 3px solid var(--accent-b);
+    padding: 14px 16px;
+    font-size: 0.95rem;
+  }
+  .nye-callout strong{ color: var(--accent-a); }
+
+  .activity-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .activity{
+    background: var(--paper);
+    padding: 16px;
+  }
+  .activity.featured{ background: var(--paper-raised); grid-column: 1 / -1; }
+  .activity .head{ display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .activity svg{ width: 20px; height: 20px; stroke: var(--accent-a); flex: 0 0 auto; }
+  .activity .name{ font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-a); }
+  .activity p{ margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+  .activity p.lede{ color: var(--ink); }
+
+  .timeline{ border-left: 2px solid var(--line); padding-left: 0; margin-left: 4px; }
+  .day{
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    padding: 8px 0 8px 18px;
+    position: relative;
+    font-size: 0.9rem;
+  }
+  .day::before{
+    content: "";
+    position: absolute;
+    left: -5px; top: 15px;
+    width: 8px; height: 8px;
+    background: var(--accent-a);
+    border-radius: 50%;
+  }
+  .day .d{ font-family: var(--font-mono); color: var(--accent-a); font-size: 0.8rem; padding-top: 2px; }
+  .day .t{ color: var(--ink-soft); }
+  .day .t b{ color: var(--ink); font-weight: 600; }
+
+  .field-notes{
+    background: var(--paper-raised);
+    border: 1px dashed var(--ink-soft);
+    padding: 16px 18px;
+    font-size: 0.9rem;
+  }
+  .field-notes h3{ font-size: 0.95rem; margin-bottom: 8px; }
+  .field-notes ul{ margin: 0; padding-left: 18px; }
+  .field-notes li{ margin-bottom: 6px; color: var(--ink-soft); }
+
+  /* ---------- Scorecard ---------- */
+  .scorecard{
+    background: var(--paper-raised-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 34px 0 40px;
+  }
+  .scorecard h2{ font-size: 1.5rem; }
+  .scorecard .sub{ color: var(--ink-soft); font-size: 0.92rem; max-width: 60ch; margin-top: 8px; }
+
+  .score-card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    margin-top: 20px;
+  }
+  .score-card .title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .score-card .title h3{ font-size: 1.1rem; }
+  .score-card .avg{
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--sc-accent);
+  }
+  .slider-row{
+    display: grid;
+    grid-template-columns: 118px 1fr 34px;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+  }
+  .slider-row label{ font-size: 0.82rem; color: var(--ink-soft); }
+  .slider-row output{ font-family: var(--font-mono); font-size: 0.85rem; text-align: right; font-variant-numeric: tabular-nums; }
+  input[type="range"]{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--line);
+    border-radius: 2px;
+    outline-offset: 4px;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--sc-accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--sc-accent);
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--sc-accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--sc-accent);
+    cursor: pointer;
+    border: none;
+  }
+
+  .compare{ margin-top: 26px; }
+  .compare-row{
+    display: grid;
+    grid-template-columns: 108px 1fr 46px;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+  }
+  .compare-row .label{ font-family: var(--font-mono); font-size: 0.82rem; display: flex; align-items: center; gap: 6px; }
+  .compare-row .track{ background: var(--line); height: 10px; position: relative; }
+  .compare-row .fill{ height: 100%; transition: width .2s ease; }
+  .compare-row .val{ font-family: var(--font-mono); font-size: 0.85rem; text-align: right; font-variant-numeric: tabular-nums; }
+  .crown{ font-size: 0.7rem; }
+
+  .reset-row{ margin-top: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .reset-btn{
+    border: 1px solid var(--ink-soft);
+    background: transparent;
+    color: var(--ink);
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+  }
+  .reset-btn:hover{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .save-note{ font-size: 0.78rem; color: var(--ink-soft); }
+
+  /* ---------- Other contenders ---------- */
+  .contenders{ padding: 40px 0; }
+  .contenders h2{ font-size: 1.4rem; }
+  .contenders .sub{ color: var(--ink-soft); font-size: 0.92rem; margin-top: 6px; max-width: 60ch; }
+  .chip-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .chip{
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+    background: var(--paper-raised);
+  }
+  .chip .name{ font-family: var(--font-display); font-size: 1.05rem; }
+  .chip p{ font-size: 0.85rem; color: var(--ink-soft); margin: 6px 0 0; }
+
+  footer{
+    padding: 26px 0 50px;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+  footer p{ max-width: 60ch; }
+
+  @media (max-width: 560px){
+    .slider-row{ grid-template-columns: 92px 1fr 30px; gap: 8px; }
+    .compare-row{ grid-template-columns: 78px 1fr 40px; }
+    .day{ grid-template-columns: 50px 1fr; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="wrap top">
+      <div>
+        <div class="eyebrow">Two travelers &middot; one decision</div>
+        <h1>The December&nbsp;Dossier</h1>
+        <div class="route-line">DEN &rarr; ??? &rarr; DEN &nbsp;&middot;&nbsp; Dep. Dec 19&ndash;21 &nbsp;&middot;&nbsp; Ret. Jan 2&ndash;3</div>
+        <p class="intro">Three real trips, researched and priced for two adventurous eaters who like their vacations with a little exposure risk. Read each dossier, then drag the sliders below until one of them wins the argument.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar">
+    <div class="wrap row" role="tablist" aria-label="Destinations">
+      <button class="tab cr" role="tab" aria-selected="true" data-target="cr"><span class="n">01</span>Costa Rica</button>
+      <button class="tab pt" role="tab" aria-selected="false" data-target="pt"><span class="n">02</span>Portugal &amp; Spain</button>
+      <button class="tab nz" role="tab" aria-selected="false" data-target="nz"><span class="n">03</span>New Zealand &middot; Wildcard</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <!-- ================= COSTA RICA ================= -->
+    <article class="dossier active" id="cr" style="--accent-a:var(--cr-a); --accent-b:var(--cr-b);">
+      <div class="dossier-head">
+        <div>
+          <div class="eyebrow">Option 01 &middot; La Fortuna &rarr; Monteverde &rarr; Tamarindo</div>
+          <h2>Costa Rica</h2>
+          <p class="tagline">Volcano hikes, cloud forest, mangrove kayaking, and a proper beach-town New Year's &mdash; the safest bet for "warm and adventurous."</p>
+        </div>
+        <div class="verdict-badge">The all-rounder</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="k">Flight (2 pax, RT)</div><div class="v">$1,400&ndash;2,200</div></div>
+        <div class="stat"><div class="k">Flight time</div><div class="v">5&ndash;8 hrs, 0&ndash;1 stop</div></div>
+        <div class="stat"><div class="k">Full trip budget</div><div class="v">$6,900&ndash;11,300</div></div>
+        <div class="stat"><div class="k">Daytime highs</div><div class="v">78&ndash;90&deg;F</div></div>
+      </div>
+
+      <section class="block">
+        <h3>Weather log</h3>
+        <div class="sub">Dry season on the Pacific side is real. Arenal and Monteverde are their own microclimates regardless of month.</div>
+        <div class="table-scroll">
+        <table class="grid-table">
+          <thead><tr><th>Region</th><th class="num">High</th><th class="num">Low</th><th>Rain</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>La Fortuna / Arenal</td><td class="num">78&ndash;82&deg;F</td><td class="num">68&ndash;70&deg;F</td><td>~16 days/mo</td><td>Humid, lush &mdash; volcano summit is often cloud-wrapped no matter the season</td></tr>
+            <tr><td>Monteverde</td><td class="num">68&ndash;78&deg;F</td><td class="num">~60&deg;F</td><td>Misty most days</td><td>Fog and light drizzle are the cloud forest's normal state, not bad luck. Windy late Dec &mdash; bring a shell</td></tr>
+            <tr><td>Tamarindo / Guanacaste</td><td class="num">84&ndash;90&deg;F</td><td class="num">75&ndash;78&deg;F</td><td>Almost none</td><td>True dry-season sun; water ~79&deg;F. This is peak season for exactly this reason</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>Christmas &amp; New Year's</h3>
+        <div class="sub">Dec 24 is the family night everywhere &mdash; expect shorter hours, not closed doors, in tourist towns.</div>
+        <p>Nochebuena (Dec 24) empties the streets as families head to midnight Mass and tamale dinners; tourist-town restaurants stay open but on lighter staffing. Dec 25 and Jan 1 are quiet in the way a country's own holiday is quiet &mdash; banks and government close, hotels and beach bars don't. San Jos&eacute;'s Zapote fair and the Tope horse parade run this same week if you have airport layover hours to spend.</p>
+        <div class="nye-callout"><strong>New Year's Eve in Tamarindo</strong> is one of the country's best-known beach parties &mdash; bonfires, beachfront DJs, and fireworks up and down the shore from Langosta to Playa Grande at midnight. Everything worth doing is walkable; don't plan on driving anywhere that night. Book lodging early &mdash; prime spots go 6&ndash;9 months out.</div>
+      </section>
+
+      <section class="block">
+        <h3>Activities</h3>
+        <div class="sub">Honest read: strong on hiking, biking, kayaking and surf. Thin on rock climbing and art &mdash; those are half-day add-ons here, not pillars.</div>
+        <div class="activity-grid">
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 19 L9 8 L13 13 L16 9 L22 19 Z"/></svg><span class="name">Hiking</span></div>
+            <p class="lede">Cerro Chato's ~5hr round trip to a jade crater lake is the marquee day, paired with La Fortuna Waterfall's 530-step descent.</p>
+            <p>Rincón de la Vieja adds dry-forest trails to bubbling mud pots and a hot-spring soak &mdash; a good day trip from Tamarindo.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 20 L10 6 L14 14 L20 4"/><circle cx="10" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="14" r="1.1" fill="currentColor" stroke="none"/><circle cx="20" cy="4" r="1.1" fill="currentColor" stroke="none"/></svg><span class="name">Rock climbing</span></div>
+            <p>This isn't a climbing country &mdash; the real crags (Cach&iacute;, Provi­dencia) sit near San Jos&eacute;, off-route. From Tamarindo, <strong>Playa Flamingo</strong> is a legit seaside sport crag (5.7&ndash;5.13) bookable through TamaRocks. Treat it as a fun half-day, not a trip pillar.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><ellipse cx="12" cy="14" rx="9" ry="3"/><line x1="4" y1="4" x2="18" y2="16"/></svg><span class="name">Kayaking / canoeing</span></div>
+            <p>The Tamarindo Estuary mangrove paddle &mdash; crocodiles, herons, howler monkeys &mdash; is beginner-friendly and needs zero experience.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17 L10 8 L15 8 M10 8 L14 17 M14 17 L18 17"/></svg><span class="name">Mountain biking</span></div>
+            <p>Desaf&iacute;o and Bike Arenal run ~6hr guided rides around Lake Arenal through farmland, jungle, and river crossings, volcano always in view.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 16 Q6 10 10 16 T18 16 T22 12"/></svg><span class="name">Surfing</span></div>
+            <p>Tamarindo's main beach is genuinely forgiving for a beginner; Playa Grande, 10 minutes off, is a real step up in power &mdash; warm water (~79&deg;F) year-round.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 2 V10 M8 2 V10 M6 10 V22 M8 10 V22 M6 6 H8"/><path d="M17 2 C15 4 15 8 17 10 V22"/></svg><span class="name">Food</span></div>
+            <p>Casado plates and gallo pinto are the daily rhythm; ceviche is a genuine strength on the coast. Nothing wild by global standards, but ingredient-driven and fruit-heavy &mdash; La Fortuna's mid-range dining scene outperforms expectations.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/><path d="M4 18 L10 12 L14 16 L17 13 L21 18"/></svg><span class="name">Art / museums</span></div>
+            <p>Not a museum country, and none of these three towns have more than gift-shop galleries. San Jos&eacute;'s Jade and Gold Museums are worth a layover if you have one &mdash; don't build the trip around this.</p>
+          </div>
+          <div class="activity featured">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 20 Q8 14 6 8 Q10 4 12 10 Q16 16 22 12" stroke-dasharray="2 2"/><path d="M9 20 L13 12 L17 20 Z"/></svg><span class="name">Bikepacking &mdash; not realistic here</span></div>
+            <p class="lede">La Fortuna to Monteverde is 15km as the crow flies but 3&ndash;4 hours to <em>drive</em> &mdash; narrow, mountainous, unpaved in stretches, shared with fast tour vans. Point-to-point touring isn't a good idea on this route. The guided MTB days above are the honest substitute.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>The ledger</h3>
+        <div class="sub">Two people, ~14 days, peak holiday pricing &mdash; this is the single most expensive week of the year to visit Costa Rica.</div>
+        <div class="table-scroll">
+        <table class="grid-table">
+          <thead><tr><th>Category</th><th class="num">Low</th><th class="num">High</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Flights</td><td class="num">$1,400</td><td class="num">$2,200</td><td>Fly open-jaw SJO in / LIR out to skip backtracking</td></tr>
+            <tr><td>Lodging (13 nights, 3 towns)</td><td class="num">$1,300</td><td class="num">$2,600</td><td>Tamarindo surges hardest over NYE</td></tr>
+            <tr><td>4x4 rental + insurance</td><td class="num">$1,150</td><td class="num">$1,750</td><td>4x4 is not optional if Monteverde's on the route</td></tr>
+            <tr><td>Gas</td><td class="num">$150</td><td class="num">$250</td><td>~400&ndash;500 mi across the loop</td></tr>
+            <tr><td>Food</td><td class="num">$1,120</td><td class="num">$1,680</td><td>$40&ndash;60/day per person</td></tr>
+            <tr><td>Activities &amp; tours</td><td class="num">$1,600</td><td class="num">$2,400</td><td>Hikes, hot springs, MTB, zipline, surf, climbing, kayak</td></tr>
+            <tr><td>Misc</td><td class="num">$200</td><td class="num">$400</td><td>Shuttles, tips, eSIM</td></tr>
+            <tr class="total-row"><td>Total &middot; 2 people</td><td class="num">$6,900</td><td class="num">$11,300</td><td>Peak week &mdash; flexible dates would meaningfully lower this</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>Day by day</h3>
+        <div class="timeline">
+          <div class="day"><div class="d">D1</div><div class="t">Depart Denver &rarr; arrive San Jos&eacute; evening</div></div>
+          <div class="day"><div class="d">D2</div><div class="t">Drive to <b>La Fortuna</b> (~3hr); hot springs soak</div></div>
+          <div class="day"><div class="d">D3</div><div class="t">Cerro Chato hike + La Fortuna Waterfall</div></div>
+          <div class="day"><div class="d">D4</div><div class="t">Rafting/canyoning, or Desaf&iacute;o mountain bike day around Lake Arenal</div></div>
+          <div class="day"><div class="d">D5</div><div class="t">Travel to <b>Monteverde</b> (~3&ndash;4hr); low-key Nochebuena dinner</div></div>
+          <div class="day"><div class="d">D6</div><div class="t">Christmas Day &mdash; Cloud Forest Reserve hike, relaxed afternoon</div></div>
+          <div class="day"><div class="d">D7</div><div class="t">Santa Elena Reserve + canopy zipline</div></div>
+          <div class="day"><div class="d">D8</div><div class="t">Travel to <b>Tamarindo</b> (~4hr)</div></div>
+          <div class="day"><div class="d">D9</div><div class="t">Surf lesson, settle into beach mode</div></div>
+          <div class="day"><div class="d">D10</div><div class="t">Day trip to Rinc&oacute;n de la Vieja &mdash; hike + mud bath</div></div>
+          <div class="day"><div class="d">D11</div><div class="t">Playa Flamingo climbing day; estuary kayak in the afternoon</div></div>
+          <div class="day"><div class="d">D12</div><div class="t">New Year's Eve &mdash; Playa Grande surf, then beach bonfire party at midnight</div></div>
+          <div class="day"><div class="d">D13</div><div class="t">Recovery day &mdash; beach, casual food</div></div>
+          <div class="day"><div class="d">D14</div><div class="t">Last surf session, transfer to Liberia (~45&ndash;75 min), fly home</div></div>
+        </div>
+      </section>
+
+      <div class="field-notes">
+        <h3>Field notes</h3>
+        <ul>
+          <li>Dec 19&ndash;Jan 3 is the single most expensive week of the year here &mdash; book flights and the rental car now.</li>
+          <li>A 4x4 is required, not optional, for the La Fortuna&ndash;Monteverde leg.</li>
+          <li>Rock climbing and museums are real but minor inclusions &mdash; go in with tropical-adventure expectations, not crag or gallery expectations.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ================= PORTUGAL & SPAIN ================= -->
+    <article class="dossier" id="pt" style="--accent-a:var(--pt-a); --accent-b:var(--pt-b);">
+      <div class="dossier-head">
+        <div>
+          <div class="eyebrow">Option 02 &middot; Lisbon &amp; Sintra &rarr; Algarve &rarr; Seville &amp; Granada</div>
+          <h2>Portugal &amp; Spain</h2>
+          <p class="tagline">A relaxed two-country loop in your own rental car &mdash; Lisbon's museums and Sintra's crags, Algarve coastline, then Seville's tapas and Christmas lights and Granada's Alhambra, before looping back for Lisbon's NYE.</p>
+        </div>
+        <div class="verdict-badge">Food, art &amp; easy exploring</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="k">Flight (2 pax, RT)</div><div class="v">$1,800&ndash;2,800</div></div>
+        <div class="stat"><div class="k">Flight time</div><div class="v">13&ndash;18 hrs, 1 stop</div></div>
+        <div class="stat"><div class="k">Full trip budget</div><div class="v">$5,900&ndash;9,300</div></div>
+        <div class="stat"><div class="k">Daytime highs</div><div class="v">53&ndash;62&deg;F</div></div>
+      </div>
+
+      <section class="block">
+        <h3>Weather log</h3>
+        <div class="sub">Be honest with yourselves: this whole loop is cool and damp, not beach-warm. Pack layers and a rain shell, not a parka &mdash; and a warm one for Granada evenings.</div>
+        <div class="table-scroll">
+        <table class="grid-table">
+          <thead><tr><th>Region</th><th class="num">High</th><th class="num">Low</th><th>Rain</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Lisbon</td><td class="num">61&deg;F</td><td class="num">50&deg;F</td><td>~14 days/mo</td><td>~4h20m of sun/day. Cool, mild, damp &mdash; layers over a parka</td></tr>
+            <tr><td>Sintra</td><td class="num">~58&deg;F</td><td class="num">~48&deg;F</td><td>Foggier still</td><td>A few degrees cooler and mistier than Lisbon thanks to elevation and forest</td></tr>
+            <tr><td>Algarve (Lagos/Sagres)</td><td class="num">61&ndash;62&deg;F</td><td class="num">46&ndash;49&deg;F</td><td>Fewer, heavier days</td><td>Sunniest and mildest of the three Portuguese stops. Water ~63&ndash;64&deg;F &mdash; wetsuit required</td></tr>
+            <tr><td>Seville</td><td class="num">62&deg;F</td><td class="num">42&ndash;46&deg;F</td><td>~14 days, ~3.1in</td><td>December is Seville's wettest month, but sunny stretches between &mdash; actually a touch milder by day than the Algarve</td></tr>
+            <tr><td>Granada</td><td class="num">53&deg;F</td><td class="num">39&deg;F</td><td>~14 days, ~2.6in</td><td>The coldest stop of the whole trip &mdash; elevation right below the Sierra Nevada, big day/night swing</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p style="font-size:0.88rem; color:var(--ink-soft); margin-top:10px;">Daylight is short near the solstice &mdash; sunrise ~7:45am, sunset ~5:16pm in Lisbon. Plan outdoor days to start early and wrap by 5pm.</p>
+      </section>
+
+      <section class="block">
+        <h3>Christmas &amp; New Year's</h3>
+        <div class="sub">Lisbon and Seville both go big on lights this time of year &mdash; but real closures on Dec 25 and Jan 1 in both countries need planning around.</div>
+        <p>Rua Augusta and Baixa string up lights, a 30m tree rises over Pra&ccedil;a do Com&eacute;rcio, and the Rossio Christmas Market runs mulled wine and cork-craft stalls through the season. Seville matches it stride for stride &mdash; over 300 streets and squares lit through early January, with Calle Tetu&aacute;n and the fa&ccedil;ades around Plaza San Francisco the standout stroll, plus a traditional nativity-scene market (Feria de Belenes) near the cathedral. Most shops, monuments, and family restaurants close on Christmas Day and New Year's Day in both countries &mdash; the Alh&aacute;mbra, Real Alc&aacute;zar, and both cathedrals included &mdash; so book a hotel with its own restaurant or treat those two days as travel days.</p>
+        <div class="nye-callout"><strong>New Year's Eve at Pra&ccedil;a do Com&eacute;rcio</strong> is the trip's finale &mdash; DJs and live acts from ~9:30pm, then a 10-minute fireworks show synced with 250 drones over the Tagus at midnight, 100,000+ people in the square. Arrive by 9&ndash;10pm, or book a rooftop bar (Topo Chiado, Memmo Alfama) for a calmer, paid view.</div>
+      </section>
+
+      <section class="block">
+        <h3>Activities</h3>
+        <div class="sub">Honest read: this is a food-and-culture trip first, with enough hiking, climbing, kayaking and surf on the side to keep it from feeling sleepy. Nothing here is a multi-day commitment.</div>
+        <div class="activity-grid">
+          <div class="activity featured">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/><path d="M4 18 L10 12 L14 16 L17 13 L21 18"/></svg><span class="name">Art &amp; culture &mdash; the trip's real strength</span></div>
+            <p class="lede">Lisbon's <b>Gulbenkian</b> (5,000 years of collection, Rembrandt to Monet), <b>MAAT</b>'s riverside architecture, and the <b>National Tile Museum</b>. Seville's <b>Real Alc&aacute;zar</b> (&euro;21pp) and <b>Cathedral/Giralda</b> (&euro;14pp), then Granada's <b>Alhambra</b> &mdash; book the moment your dates are fixed, tickets release 90 days out and holiday week adds real risk of selling out.</p>
+            <p>Add a flamenco show in Seville's Triana or Santa Cruz (Los Gallos, Casa de la Memoria &mdash; roughly &euro;28&ndash;38pp with a drink) for one proper night out.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 2 V10 M8 2 V10 M6 10 V22 M8 10 V22 M6 6 H8"/><path d="M17 2 C15 4 15 8 17 10 V22"/></svg><span class="name">Food</span></div>
+            <p>18 Michelin-starred restaurants in Lisbon alone, plus Manteigaria's pas­t&eacute;is de nata. Seville's tapas circuit centers on jam&oacute;n ib&eacute;rico, salmorejo and sherry at century-old bars like El Rinconcillo. Granada flips the model entirely &mdash; order a drink, get a free tapa, repeat down Calle Navas.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 19 L9 8 L13 13 L16 9 L22 19 Z"/></svg><span class="name">Hiking</span></div>
+            <p>Sintra's forested hills and the Seven Hanging Valleys Trail near Lagos, plus a genuinely easy day-walk near Granada through the Alpujarras' white villages (Bubi&oacute;n&ndash;Pampaneira&ndash;Capileira) along old Moorish irrigation channels &mdash; scenic, shaded, no technical ground.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 20 L10 6 L14 14 L20 4"/><circle cx="10" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="14" r="1.1" fill="currentColor" stroke="none"/><circle cx="20" cy="4" r="1.1" fill="currentColor" stroke="none"/></svg><span class="name">Rock climbing</span></div>
+            <p><b>Sintra</b> (Farol da Guia, ~80 routes) and south-facing <b>Arr&aacute;bida</b> cover the Portugal side. If you want one bigger day out, <b>El Chorro/Caminito del Rey</b> near M&aacute;laga is a real crag and a spectacular cliffside walkway &mdash; but it's a full ~7hr day from Seville or Granada, so treat it as optional, not a must-do.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><ellipse cx="12" cy="14" rx="9" ry="3"/><line x1="4" y1="4" x2="18" y2="16"/></svg><span class="name">Kayaking</span></div>
+            <p>Benagil Cave, guided kayak or boat only, runs year-round &mdash; mornings are calmer and far less crowded than summer. Book flexible/refundable given winter swell risk.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 16 Q6 10 10 16 T18 16 T22 12"/></svg><span class="name">Surfing</span></div>
+            <p><b>Ericeira</b> and <b>Sagres/Arrifana</b> get powerful December groundswell &mdash; genuinely expert-level on the reef breaks. Sheltered beaches (Foz do Lizandro, Zavial) work fine for a lesson. 4/3mm wetsuit minimum.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17 L10 8 L15 8 M10 8 L14 17 M14 17 L18 17"/></svg><span class="name">A day on two wheels, if you want it</span></div>
+            <p>No dedicated cycling leg here &mdash; just a casual half-day option, like an easy coastal ride around the Algarve or renting bikes for an afternoon in Seville's old town. Nice to have, not a plan to build the trip around.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>Getting between the two countries</h3>
+        <div class="sub">Keep the same rental car for the whole loop rather than a one-way drop &mdash; crossing the border and back is a small fee; a one-way drop between Spain and Portugal can run &euro;500+.</div>
+        <p>Drive Faro &rarr; Seville yourselves (~125mi, ~2&ndash;2.5hr, no tolls) &mdash; the most realistic option since the car's already with you from the Algarve. Park it near the edge of Seville's old town (the historic core is narrow and largely pedestrianized) and get around on foot. For Granada, leave the car parked in Seville and take the train (~2.5&ndash;3.5hr, ~$35&ndash;40pp), then train back to Seville to reclaim the car and drive back through the Algarve toward Lisbon for New Year's.</p>
+      </section>
+
+      <section class="block">
+        <h3>The ledger</h3>
+        <div class="sub">Two people, ~14 days, across two countries.</div>
+        <div class="table-scroll">
+        <table class="grid-table">
+          <thead><tr><th>Category</th><th class="num">Low</th><th class="num">High</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Flights</td><td class="num">$1,800</td><td class="num">$2,800</td><td>1-stop via Newark/JFK/Miami or a European hub</td></tr>
+            <tr><td>Lodging &mdash; Lisbon/Sintra (5 nights)</td><td class="num">$450</td><td class="num">$900</td><td>Off-season pricing; Sintra runs pricier per night</td></tr>
+            <tr><td>Lodging &mdash; Algarve (4 nights)</td><td class="num">$500</td><td class="num">$800</td><td></td></tr>
+            <tr><td>Lodging &mdash; Seville (2 nights)</td><td class="num">$300</td><td class="num">$380</td><td>~$150&ndash;190/night, December average</td></tr>
+            <tr><td>Lodging &mdash; Granada (2 nights)</td><td class="num">$230</td><td class="num">$340</td><td>December is Granada's Airbnb price peak &mdash; book early</td></tr>
+            <tr><td>Rental car + gas (whole loop)</td><td class="num">$500</td><td class="num">$750</td><td>Same car the whole way, incl. cross-border fee</td></tr>
+            <tr><td>Seville &harr; Granada train</td><td class="num">$140</td><td class="num">$200</td><td>Round trip, 2 people</td></tr>
+            <tr><td>Food</td><td class="num">$1,100</td><td class="num">$1,700</td><td>Tascas, tapas crawls, 1&ndash;2 splurge meals</td></tr>
+            <tr><td>Activities &amp; tickets</td><td class="num">$700</td><td class="num">$1,050</td><td>Alc&aacute;zar, Alhambra, Cathedral, flamenco, surf/kayak day, museum entries</td></tr>
+            <tr><td>Misc</td><td class="num">$200</td><td class="num">$400</td><td>Tips, transit, NYE logistics</td></tr>
+            <tr class="total-row"><td>Total &middot; 2 people</td><td class="num">$5,900</td><td class="num">$9,300</td><td>Comfortable target: ~$6,800&ndash;7,800</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>Day by day</h3>
+        <div class="timeline">
+          <div class="day"><div class="d">D1</div><div class="t">Land <b>Lisbon</b>, Baixa/Chiado Christmas lights</div></div>
+          <div class="day"><div class="d">D2</div><div class="t">Gulbenkian Museum, Bel&eacute;m, MAAT, Tile Museum</div></div>
+          <div class="day"><div class="d">D3</div><div class="t">Sintra day &mdash; Pena Palace, Moorish Castle; overnight in Sintra</div></div>
+          <div class="day"><div class="d">D4</div><div class="t">Sintra climbing (Farol da Guia) or coastal hike to Cabo da Roca</div></div>
+          <div class="day"><div class="d">D5</div><div class="t">Ericeira surf lesson at a sheltered beach; pick up rental car, head for the <b>Algarve</b></div></div>
+          <div class="day"><div class="d">D6</div><div class="t">Seven Hanging Valleys hike; Benagil kayak tour</div></div>
+          <div class="day"><div class="d">D7</div><div class="t">Drive Faro &rarr; <b>Seville</b> (~2.5hr); Christmas lights walk, tapas at El Rinconcillo</div></div>
+          <div class="day"><div class="d">D8</div><div class="t">Real Alc&aacute;zar + Cathedral/Giralda; flamenco show in Santa Cruz that night</div></div>
+          <div class="day"><div class="d">D9</div><div class="t">Train to <b>Granada</b> (~2.5&ndash;3.5hr); Alhambra, Albaic&iacute;n free-tapas crawl</div></div>
+          <div class="day"><div class="d">D10</div><div class="t">Alpujarras villages day-hike, or the optional Caminito del Rey day trip</div></div>
+          <div class="day"><div class="d">D11</div><div class="t">Train back to Seville, reclaim the car, drive back toward the Algarve</div></div>
+          <div class="day"><div class="d">D12</div><div class="t">Free day back in the Algarve or Lisbon &mdash; recovery, museum catch-up</div></div>
+          <div class="day"><div class="d">D13</div><div class="t">Dec 31 &mdash; food market, Fado dinner, then Pra&ccedil;a do Com&eacute;rcio at midnight</div></div>
+          <div class="day"><div class="d">D14</div><div class="t">Jan 1 recovery day (plan around closures); depart</div></div>
+        </div>
+      </section>
+
+      <div class="field-notes">
+        <h3>Field notes</h3>
+        <ul>
+          <li>Book the Alhambra the moment your dates are fixed &mdash; it's the single most time-sensitive reservation of the whole trip.</li>
+          <li>This is cool and damp weather throughout, coldest in Granada &mdash; pack real layers, not just a light jacket.</li>
+          <li>Keep the same rental car for the whole loop rather than a one-way drop between countries.</li>
+          <li>Dec 25 and Jan 1 close museums and monuments in both countries &mdash; plan those two days as travel or rest days.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ================= NEW ZEALAND ================= -->
+    <article class="dossier" id="nz" style="--accent-a:var(--nz-a); --accent-b:var(--nz-b);">
+      <div class="dossier-head">
+        <div>
+          <div class="eyebrow">Option 03 &middot; Abel Tasman &rarr; Wanaka &rarr; Queenstown</div>
+          <h2>New Zealand</h2>
+          <p class="tagline">The bucket-list swing. Southern Hemisphere summer, every activity at a world-class level &mdash; landing during the single most expensive, most crowded week on the calendar.</p>
+        </div>
+        <div class="verdict-badge">Epic, far, and pricey</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="k">Flight (2 pax, RT)</div><div class="v">$4,400&ndash;6,500</div></div>
+        <div class="stat"><div class="k">Flight time</div><div class="v">24&ndash;30+ hrs, 2 stops</div></div>
+        <div class="stat"><div class="k">Full trip budget</div><div class="v">$14,000&ndash;23,000</div></div>
+        <div class="stat"><div class="k">Daytime highs</div><div class="v">59&ndash;71&deg;F</div></div>
+      </div>
+
+      <section class="block">
+        <h3>Weather log</h3>
+        <div class="sub">Real mountain weather &mdash; it can flip from shorts to a cold squall in an afternoon, even at the height of summer.</div>
+        <div class="table-scroll">
+        <table class="grid-table">
+          <thead><tr><th>Region</th><th class="num">High</th><th class="num">Low</th><th>Rain</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Queenstown</td><td class="num">59&ndash;60&deg;F</td><td class="num">42&ndash;44&deg;F</td><td>~41% chance/day</td><td>Longest daylight of the year &mdash; ~15.5hrs</td></tr>
+            <tr><td>Wanaka</td><td class="num">65&ndash;71&deg;F</td><td class="num">49&ndash;50&deg;F</td><td>Lighter</td><td>Warmer, sunnier valley floor than Queenstown</td></tr>
+            <tr><td>Abel Tasman</td><td class="num">65&ndash;67&deg;F</td><td class="num">53&ndash;56&deg;F</td><td>Mildest region</td><td>NZ's sunniest microclimate &mdash; golden sand, blue water</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>Christmas &amp; New Year's</h3>
+        <div class="sub">This is Kiwis' own summer holiday week too &mdash; not just international tourist peak. Book everything now, this far out is already late for hut bookings.</div>
+        <p>Christmas Day itself runs quieter than you'd expect in small NZ towns &mdash; family holiday, reduced hours, book dinner ahead or plan a low-key trail day. Multi-day Great Walk hut bookings (Routeburn, Kepler) for this window opened back in May 2026 and sell out within minutes &mdash; by now, plan on day-hiking the highlights instead of overnighting them.</p>
+        <div class="nye-callout"><strong>Queenstown NYE</strong> centers on a free public fireworks show at Earnslaw Park over Lake Wakatipu, entertainment from ~7:30pm and fireworks at midnight, with Steamer Wharf running its own lakefront party alongside. Expect the whole town genuinely packed &mdash; this is the loudest, busiest week of the New Zealand year, on top of everything else.</p>
+      </section>
+
+      <section class="block">
+        <h3>Activities</h3>
+        <div class="sub">Honest read: this is the strongest activity roster of the three by a wide margin &mdash; and the weakest on surf and on ease of getting there.</div>
+        <div class="activity-grid">
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 19 L9 8 L13 13 L16 9 L22 19 Z"/></svg><span class="name">Hiking</span></div>
+            <p>Great Walk huts (Routeburn, Kepler, Abel Tasman Coast Track) are booked out by now for this window &mdash; but Routeburn Flats/Falls and Roys Peak/Isthmus Peak in Wanaka are full-day classics with no booking required.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 20 L10 6 L14 14 L20 4"/><circle cx="10" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="14" r="1.1" fill="currentColor" stroke="none"/><circle cx="20" cy="4" r="1.1" fill="currentColor" stroke="none"/></svg><span class="name">Rock climbing</span></div>
+            <p><b>Hospital Flat</b>, 20 minutes from Wanaka, is the country's largest sport-climbing area &mdash; 800+ routes, sun-drenched, dries fast. Wanaka Mountain Guides runs guided days.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><ellipse cx="12" cy="14" rx="9" ry="3"/><line x1="4" y1="4" x2="18" y2="16"/></svg><span class="name">Kayaking &mdash; the icon</span></div>
+            <p><b>Abel Tasman</b> sea kayaking among seal colonies and golden beaches is the single most iconic paddle in the country. Guided multi-day lodge trips run $400&ndash;1,200pp; self-guided freedom rentals are far cheaper.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17 L10 8 L15 8 M10 8 L14 17 M14 17 L18 17"/></svg><span class="name">Mountain biking</span></div>
+            <p><b>Queenstown Bike Park</b> off the Skyline Gondola &mdash; 28+ gravity trails from beginner to expert across a 30km+ network, genuinely world-class, not a token activity.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 16 Q6 10 10 16 T18 16 T22 12"/></svg><span class="name">Surfing &mdash; the weak link</span></div>
+            <p>Queenstown/Wanaka/Abel Tasman are landlocked or calm-water. Dunedin's St Clair is the real South Island break, but its best season is autumn/winter, not December. If surf is a priority, this isn't the trip for it.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 2 V10 M8 2 V10 M6 10 V22 M8 10 V22 M6 6 H8"/><path d="M17 2 C15 4 15 8 17 10 V22"/></svg><span class="name">Food &amp; wine</span></div>
+            <p>Central Otago wine country (Gibbston Valley, Bannockburn) for full-day tastings; Fergburger and a strong small-city dining scene in Queenstown; Rippon Vineyard's lake view in Wanaka.</p>
+          </div>
+          <div class="activity">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/><path d="M4 18 L10 12 L14 16 L17 13 L21 18"/></svg><span class="name">Art / museums</span></div>
+            <p><b>Dunedin's Toit&#363; Otago Settlers Museum</b> (free, 100,000+ objects) is the honest pick &mdash; a manageable ~4hr drive. Wellington's Te Papa is genuinely excellent but requires a flight-plus-ferry detour that doesn't fit this route.</p>
+          </div>
+          <div class="activity featured">
+            <div class="head"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 20 Q8 14 6 8 Q10 4 12 10 Q16 16 22 12" stroke-dasharray="2 2"/><path d="M9 20 L13 12 L17 20 Z"/></svg><span class="name">Bikepacking &mdash; a taste, not the whole trail</span></div>
+            <p class="lede">The <b>Otago Central Rail Trail</b> (152km, Clyde to Middlemarch) is one of NZ's most famous cycle-touring routes, but the full 3&ndash;5 day version doesn't realistically fit alongside everything else in 13&ndash;15 days. The honest compromise: a half-day e-bike ride (Clyde &rarr; Alexandra and back) slotted into the Central Otago wine day.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>The ledger</h3>
+        <div class="sub">Two people, ~14 days. Flights alone can cost more than either other trip's entire budget.</div>
+        <div class="table-scroll">
+        <table class="grid-table">
+          <thead><tr><th>Category</th><th class="num">Low</th><th class="num">High</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>International flights</td><td class="num">$4,400</td><td class="num">$6,500</td><td>Peak Christmas/NYE week, 2-stop routing</td></tr>
+            <tr><td>Domestic flights (Queenstown &harr; Nelson)</td><td class="num">$600</td><td class="num">$1,200</td><td>Driving instead is a 10hr one-way slog</td></tr>
+            <tr><td>Rental car + fuel</td><td class="num">$1,300</td><td class="num">$1,800</td><td>Peak-season daily rates, ~9&ndash;10 rental days</td></tr>
+            <tr><td>Lodging (Queenstown/Wanaka)</td><td class="num">$2,500</td><td class="num">$4,500</td><td>Genuine peak-season markup</td></tr>
+            <tr><td>Abel Tasman lodging/kayak package</td><td class="num">$1,200</td><td class="num">$2,400</td><td>Far less if self-guided/camping</td></tr>
+            <tr><td>Food</td><td class="num">$2,100</td><td class="num">$3,900</td><td>$80&ndash;150/day per person, mid-range</td></tr>
+            <tr><td>Activities</td><td class="num">$1,800</td><td class="num">$3,000</td><td>Wine tour, climbing guide, MTB passes, Milford Sound cruise</td></tr>
+            <tr class="total-row"><td>Total &middot; 2 people</td><td class="num">$14,000</td><td class="num">$23,000</td><td>Roughly 2&ndash;3&times; either other trip</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section class="block">
+        <h3>Day by day</h3>
+        <div class="timeline">
+          <div class="day"><div class="d">D1</div><div class="t">Depart Denver evening</div></div>
+          <div class="day"><div class="d">D2&ndash;3</div><div class="t">In transit &mdash; LAX/SFO &rarr; Auckland, cross the date line, connect to Queenstown</div></div>
+          <div class="day"><div class="d">D4</div><div class="t">Arrive Queenstown evening, rest</div></div>
+          <div class="day"><div class="d">D5</div><div class="t">Fly to Nelson, transfer to Marahau &mdash; gear check for <b>Abel Tasman</b></div></div>
+          <div class="day"><div class="d">D6&ndash;8</div><div class="t">Abel Tasman Coast Track &mdash; 3-day kayak + walk combo, Christmas Day on the trail</div></div>
+          <div class="day"><div class="d">D9</div><div class="t">Fly back to Queenstown, transfer to <b>Wanaka</b></div></div>
+          <div class="day"><div class="d">D10</div><div class="t">Hospital Flat guided climbing</div></div>
+          <div class="day"><div class="d">D11</div><div class="t">Roys Peak sunrise hike; Lake Wanaka paddle; Rippon Vineyard</div></div>
+          <div class="day"><div class="d">D12</div><div class="t">Central Otago wine day + Rail Trail e-bike taste</div></div>
+          <div class="day"><div class="d">D13</div><div class="t">Routeburn Flats day hike; New Year's Eve fireworks at Earnslaw Park</div></div>
+          <div class="day"><div class="d">D14</div><div class="t">Queenstown Bike Park; Milford Sound cruise or Dunedin day trip; depart</div></div>
+        </div>
+      </section>
+
+      <div class="field-notes">
+        <h3>Field notes</h3>
+        <ul>
+          <li>Flights alone can run $4,400&ndash;6,500 for two &mdash; more than either other trip's <em>entire</em> budget.</li>
+          <li>This is the busiest week of the New Zealand year for locals too, not just tourists &mdash; book everything now.</li>
+          <li>Great Walk huts for this window are almost certainly gone; plan on day hikes, not overnights, unless a cancellation opens up.</li>
+          <li>If surfing is non-negotiable, this is the one trip that can't deliver it.</li>
+        </ul>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ================= SCORECARD ================= -->
+  <section class="scorecard">
+    <div class="wrap">
+      <div class="eyebrow">Now argue about it</div>
+      <h2>The scorecard</h2>
+      <p class="sub">Drag each slider to how you both actually feel &mdash; food, adventure, ease of travel, and budget-friendliness (higher = cheaper &amp; better value). We seeded our own read from the research above; overrule us. Your changes save automatically on this device.</p>
+
+      <div id="scoreCards"></div>
+
+      <div class="compare">
+        <div class="eyebrow" style="margin-bottom:10px;">Head to head</div>
+        <div id="compareRows"></div>
+      </div>
+
+      <div class="reset-row">
+        <button class="reset-btn" id="resetBtn">Reset to our starting scores</button>
+        <span class="save-note">Scores are stored only in this browser &mdash; nothing is sent anywhere.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OTHER CONTENDERS ================= -->
+  <section class="contenders">
+    <div class="wrap">
+      <div class="eyebrow">Honorable mentions</div>
+      <h2>Didn't make the final three</h2>
+      <p class="sub">Worth a look if none of the above lands, or for a future trip.</p>
+      <div class="chip-grid">
+        <div class="chip"><div class="name">Nicaragua &middot; San Juan del Sur</div><p>Costa Rica's cheaper, rowdier cousin &mdash; same surf and volcano hiking, lower cost, rougher infrastructure.</p></div>
+        <div class="chip"><div class="name">Panama &middot; Bocas del Toro / Boquete</div><p>Surf plus cloud-forest hiking and coffee country, cheaper than Costa Rica, less polished tourist infrastructure.</p></div>
+        <div class="chip"><div class="name">Thailand &middot; Krabi / Railay</div><p>World-class rock climbing over turquoise water and incredible, very affordable food &mdash; against a brutal ~24hr flight.</p></div>
+        <div class="chip"><div class="name">Guatemala &middot; Lake Atiitl&aacute;n / Antigua</div><p>Volcano hiking, kayaking, colonial art and markets, very affordable &mdash; thin on surf and mountain biking.</p></div>
+        <div class="chip"><div class="name">Puerto Rico</div><p>No passport, short flight, surf and rainforest hiking &mdash; limited real rock climbing or mountain biking, pricier than Central America.</p></div>
+        <div class="chip"><div class="name">Chile &middot; Patagonia / Santiago</div><p>Southern Hemisphere summer, world-class hiking, climbing and wine &mdash; same long-flight, high-cost tradeoff as New Zealand.</p></div>
+        <div class="chip"><div class="name">Morocco &middot; Marrakech / Atlas Mountains</div><p>Incredible food, art and markets, affordable, real High Atlas hiking &mdash; no real surf or kayaking fit.</p></div>
+        <div class="chip"><div class="name">Hawaii &middot; Big Island / Kaua&#699;i</div><p>No passport, ~6hr flight, warm surf and hiking &mdash; pricier lodging, weak on rock climbing and art.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>Researched via live web search on Aug 14, 2026. Flights, lodging and tour prices are estimates made ~4 months before travel for the single most expensive booking window of the year in every one of these places &mdash; reverify everything before you actually buy. Great Walk huts, Benagil tours and Tamarindo NYE lodging all reward booking early.</p>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  var STORAGE_KEY = "decemberDossier.scores.v1";
+
+  var DEFAULTS = {
+    cr: { food: 7, adventure: 9, ease: 8, budget: 5 },
+    pt: { food: 9, adventure: 7, ease: 6, budget: 5 },
+    nz: { food: 8, adventure: 10, ease: 2, budget: 2 }
+  };
+
+  var META = {
+    cr: { label: "Costa Rica", accentVar: "--cr-a" },
+    pt: { label: "Portugal & Spain", accentVar: "--pt-a" },
+    nz: { label: "New Zealand", accentVar: "--nz-a" }
+  };
+
+  var CATS = [
+    { key: "food",      label: "Food" },
+    { key: "adventure", label: "Adventure" },
+    { key: "ease",      label: "Ease of travel" },
+    { key: "budget",    label: "Budget value" }
+  ];
+
+  function loadScores(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return JSON.parse(JSON.stringify(DEFAULTS));
+      var parsed = JSON.parse(raw);
+      var merged = {};
+      Object.keys(DEFAULTS).forEach(function(dest){
+        merged[dest] = Object.assign({}, DEFAULTS[dest], parsed[dest] || {});
+      });
+      return merged;
+    }catch(e){
+      return JSON.parse(JSON.stringify(DEFAULTS));
+    }
+  }
+
+  var scores = loadScores();
+
+  function saveScores(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(scores)); }catch(e){}
+  }
+
+  function avg(dest){
+    var s = scores[dest];
+    return (s.food + s.adventure + s.ease + s.budget) / 4;
+  }
+
+  function accentValue(varName){
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  }
+
+  function buildScoreCards(){
+    var host = document.getElementById("scoreCards");
+    host.innerHTML = "";
+    Object.keys(META).forEach(function(dest){
+      var card = document.createElement("div");
+      card.className = "score-card";
+      card.style.setProperty("--sc-accent", "var(" + META[dest].accentVar + ")");
+
+      var title = document.createElement("div");
+      title.className = "title";
+      title.innerHTML = '<h3>' + META[dest].label + '</h3><div class="avg" data-avg="' + dest + '">' + avg(dest).toFixed(1) + '</div>';
+      card.appendChild(title);
+
+      CATS.forEach(function(cat){
+        var row = document.createElement("div");
+        row.className = "slider-row";
+        var val = scores[dest][cat.key];
+        row.innerHTML =
+          '<label for="' + dest + '-' + cat.key + '">' + cat.label + '</label>' +
+          '<input type="range" min="1" max="10" step="1" value="' + val + '" id="' + dest + '-' + cat.key + '" data-dest="' + dest + '" data-cat="' + cat.key + '">' +
+          '<output for="' + dest + '-' + cat.key + '">' + val + '</output>';
+        card.appendChild(row);
+      });
+
+      host.appendChild(card);
+    });
+
+    host.querySelectorAll('input[type="range"]').forEach(function(input){
+      input.addEventListener("input", function(){
+        var dest = input.getAttribute("data-dest");
+        var cat = input.getAttribute("data-cat");
+        var v = parseInt(input.value, 10);
+        scores[dest][cat] = v;
+        input.parentElement.querySelector("output").textContent = v;
+        document.querySelector('[data-avg="' + dest + '"]').textContent = avg(dest).toFixed(1);
+        saveScores();
+        buildCompare();
+      });
+    });
+  }
+
+  function buildCompare(){
+    var host = document.getElementById("compareRows");
+    host.innerHTML = "";
+    var dests = Object.keys(META);
+    var averages = dests.map(function(d){ return avg(d); });
+    var maxAvg = Math.max.apply(null, averages);
+
+    dests.forEach(function(dest){
+      var a = avg(dest);
+      var pct = (a / 10) * 100;
+      var isLeader = a === maxAvg && maxAvg > 0;
+      var row = document.createElement("div");
+      row.className = "compare-row";
+      row.innerHTML =
+        '<div class="label">' + META[dest].label + (isLeader ? ' <span class="crown">&#9733;</span>' : '') + '</div>' +
+        '<div class="track"><div class="fill" style="width:' + pct + '%; background: var(' + META[dest].accentVar + ');"></div></div>' +
+        '<div class="val">' + a.toFixed(1) + '</div>';
+      host.appendChild(row);
+    });
+  }
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    scores = JSON.parse(JSON.stringify(DEFAULTS));
+    saveScores();
+    buildScoreCards();
+    buildCompare();
+  });
+
+  buildScoreCards();
+  buildCompare();
+
+  // Tabs
+  var tabs = document.querySelectorAll(".tab");
+  var dossiers = document.querySelectorAll(".dossier");
+  tabs.forEach(function(tab){
+    tab.addEventListener("click", function(){
+      tabs.forEach(function(t){ t.setAttribute("aria-selected", "false"); });
+      tab.setAttribute("aria-selected", "true");
+      var target = tab.getAttribute("data-target");
+      dossiers.forEach(function(d){
+        d.classList.toggle("active", d.id === target);
+      });
+      window.scrollTo({ top: document.querySelector(".tabbar").offsetTop, behavior: "smooth" });
+    });
+  });
+})();
+</script>
+</body>
+</html>
